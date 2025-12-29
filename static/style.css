@@ -1,0 +1,196 @@
+:root {
+  --bg: #f4f6ff;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --primary: #2563eb;
+  --accent: #38bdf8;
+}
+
+body.dark {
+  --bg: #0f172a;
+  --card: #020617;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --primary: #60a5fa;
+  --accent: #22d3ee;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, var(--accent), var(--bg) 45%);
+  margin: 0;
+  padding: 40px;
+  color: var(--text);
+  transition: background 0.4s ease, color 0.3s ease;
+}
+
+.container {
+  max-width: 720px;
+  margin: auto;
+  text-align: center;
+}
+
+.logo {
+  font-size: 42px;
+  letter-spacing: -1px;
+}
+
+.logo span {
+  display: inline-block;
+  animation: pop 0.6s ease forwards;
+}
+
+.logo .accent {
+  color: var(--primary);
+}
+
+@keyframes pop {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.subtitle {
+  color: var(--muted);
+  margin-bottom: 30px;
+}
+
+.card {
+  background: var(--card);
+  padding: 24px;
+  border-radius: 18px;
+  margin-bottom: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  transition: background 0.3s ease;
+}
+
+.lift {
+  transition: transform 0.25s ease;
+}
+.lift:hover {
+  transform: translateY(-3px);
+}
+
+textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #cbd5f5;
+  background: transparent;
+  color: var(--text);
+}
+
+button {
+  margin-top: 14px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.verdict {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.low { background: #dcfce7; color: #166534; }
+.moderate { background: #fef3c7; color: #92400e; }
+.high { background: #fee2e2; color: #991b1b; }
+
+.explain-toggle {
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+.examples {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.example-btn {
+  background: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.hidden { display: none; }
+
+.fade-in {
+  animation: fade 0.5s ease forwards;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Dark Mode Toggle */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--card);
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+body.dark {
+  --bg: #020617;
+  --card: #020617;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --primary: #60a5fa;
+  --accent: #22d3ee;
+}
+
+body.dark textarea,
+body.dark .card,
+body.dark p,
+body.dark li {
+  color: var(--text);
+}
+
+/* -----------------------------
+   FIX: Logo color in dark mode
+------------------------------ */
+
+/* Dark mode logo fix */
+body.dark .logo span {
+  color: #e5e7eb; /* keep "Label" light */
+}
+
+body.dark .logo .accent {
+  color: #000000; /* make "Mind" black */
+}
+
+
+#explanation {
+  text-align: left;
+  margin-left: 0;
+  padding-left: 18px; /* keeps bullets readable */
+}
+#explanation li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}

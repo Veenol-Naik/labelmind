@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LabelMind</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+  <!-- Dark Mode Toggle -->
+  <div class="theme-toggle" id="themeToggle">
+    🌙
+  </div>
+
+  <div class="container fade-in">
+    <!-- LOGO -->
+    <h1 class="logo">
+      <span>Label</span><span class="accent">Mind</span>
+    </h1>
+
+    <p class="subtitle">
+      Understand how easy or hard a food label is to interpret.
+    </p>
+
+    <!-- INPUT CARD -->
+    <div class="card lift">
+      <label>Paste ingredient list</label>
+
+      <div class="examples">
+        <button class="example-btn" data-text="Carbonated Water, Sugar, Caffeine, Caramel Colour">
+          Try soft drink
+        </button>
+        <button class="example-btn" data-text="Wheat Flour, Sugar, Palm Oil, Emulsifier (E471)">
+          Try biscuit
+        </button>
+        <button class="example-btn" data-text="Milk, Oats, Almonds, Cocoa Powder">
+          Try simple label
+        </button>
+      </div>
+
+      <textarea id="ingredients"
+        placeholder="Milk, Oats, Almonds, Cocoa Powder"></textarea>
+
+      <button id="analyze-btn">Interpret label</button>
+    </div>
+
+    <!-- RESULT -->
+    <div id="result" class="card hidden fade-in lift">
+      <span id="verdict" class="verdict">—</span>
+      <p id="summary"></p>
+
+      <button id="toggle" class="explain-toggle">
+        Why does this label need interpretation?
+      </button>
+
+      <ul id="explanation" class="hidden"></ul>
+
+      <p class="note">
+        LabelMind does not judge health quality, it highlights how much interpretation a label requires.
+      </p>
+    </div>
+  </div>
+
+  <script src="/static/script.js"></script>
+  <script src="/static/ui.js"></script>
+</body>
+</html>
