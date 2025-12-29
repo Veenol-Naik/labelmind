@@ -9,9 +9,7 @@
 
 <body>
   <!-- Dark Mode Toggle -->
-  <div class="theme-toggle" id="themeToggle">
-    🌙
-  </div>
+  <div class="theme-toggle" id="themeToggle">🌙</div>
 
   <div class="container fade-in">
     <!-- LOGO -->
@@ -27,6 +25,7 @@
     <div class="card lift">
       <label>Paste ingredient list</label>
 
+      <!-- OPTION A: Simulated Image Input -->
       <div class="examples">
         <button class="example-btn" data-text="Carbonated Water, Sugar, Caffeine, Caramel Colour">
           Try soft drink
@@ -35,9 +34,14 @@
           Try biscuit
         </button>
         <button class="example-btn" data-text="Milk, Oats, Almonds, Cocoa Powder">
-          Try simple label
+          Try simple lab
+        </button>
+        <button class="example-btn" id="imageBtn">
+          Upload label image
         </button>
       </div>
+
+      <input type="file" id="imageInput" accept="image/*" hidden />
 
       <textarea id="ingredients"
         placeholder="Milk, Oats, Almonds, Cocoa Powder"></textarea>
@@ -57,12 +61,11 @@
       <ul id="explanation" class="hidden"></ul>
 
       <p class="note">
-        LabelMind does not judge health quality, it highlights how much interpretation a label requires.
+        LabelMind does not judge health quality — it highlights how much interpretation a label requires.
       </p>
     </div>
   </div>
 
   <script src="/static/script.js"></script>
-  <script src="/static/ui.js"></script>
 </body>
 </html>

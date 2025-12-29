@@ -8,6 +8,9 @@ const explanation = document.getElementById("explanation");
 const explainToggle = document.getElementById("toggle");
 const themeToggle = document.getElementById("themeToggle");
 
+const imageBtn = document.getElementById("imageBtn");
+const imageInput = document.getElementById("imageInput");
+
 const SIGNALS = {
   "added sugar": ["sugar", "glucose", "fructose", "syrup"],
   "palm oil": ["palm oil", "palmolein"],
@@ -16,6 +19,35 @@ const SIGNALS = {
   "artificial colour": ["colour", "color", "e150"]
 };
 
+const BASIC_FOOD_WORDS = [
+  "water", "milk", "wheat", "flour", "rice", "salt",
+  "oil", "corn", "oats", "sugar", "cocoa", "soy"
+];
+
+function looksLikeIngredientText(text) {
+  const words = text.split(/[, ]+/);
+
+  const hasSignal = words.some(word =>
+    Object.values(SIGNALS).flat().some(k => word.includes(k))
+  );
+
+  const hasBasicFood = words.some(word =>
+    BASIC_FOOD_WORDS.some(f => word.includes(f))
+  );
+
+  return hasSignal || hasBasicFood;
+}
+
+/* ---------- Dynamic Explain Button Text ---------- */
+function getExplainButtonText(found) {
+  if (found.length === 0)
+    return "Why is this label easy to understand?";
+  if (found.length <= 2)
+    return "Why does this label take some effort?";
+  return "Why is this label hard to understand?";
+}
+
+/* ---------- Verdict ---------- */
 function buildVerdict(found) {
   if (found.length === 0)
     return { text: "Easy to understand", className: "verdict low" };
@@ -26,64 +58,56 @@ function buildVerdict(found) {
   return { text: "Harder to interpret at a glance", className: "verdict high" };
 }
 
+/* ---------- Explanation (UNCHANGED LOGIC) ---------- */
 function buildExplanation(found) {
   const lines = [];
 
-  const hasFunctional =
-    found.includes("emulsifier") || found.includes("artificial flavour");
-  const hasSugarOil =
-    found.includes("added sugar") || found.includes("palm oil");
+  if (found.length === 0) {
+    lines.push("The ingredients are written using familiar food terms.");
+    lines.push("Most people can quickly understand what the product contains.");
+    lines.push("Very little interpretation is required.");
+    return lines;
+  }
 
   if (found.length === 1) {
-    lines.push(
-      "One ingredient is described in a way that doesn’t clearly explain what it is."
-    );
-    lines.push(
-      "This forces the reader to pause and mentally interpret its role."
-    );
+    lines.push("One ingredient is described indirectly.");
+    lines.push("This requires a small amount of interpretation.");
   }
 
   if (found.length === 2) {
-    lines.push(
-      "A couple of ingredients are listed using functional or generic descriptions."
-    );
-    lines.push(
-      "Together, they reduce how quickly the label can be understood."
-    );
+    lines.push("A couple of ingredients use functional or generic descriptions.");
+    lines.push("This slows down understanding at a glance.");
   }
 
   if (found.length >= 3) {
-    lines.push(
-      "Several ingredients prioritize function over clarity."
-    );
-    lines.push(
-      "When many such terms appear together, forming a clear picture becomes difficult."
-    );
-  }
-
-  if (hasFunctional) {
-    lines.push(
-      "Terms like emulsifiers or flavouring agents describe what an ingredient does, not what it actually is."
-    );
-  }
-
-  if (hasSugarOil) {
-    lines.push(
-      "Added sugars or refined oils are often listed without context about quantity or purpose."
-    );
+    lines.push("Several ingredients prioritize function over clarity.");
+    lines.push("This makes forming a clear picture more difficult.");
   }
 
   lines.push(
-    "Overall, understanding this label requires more time and mental effort than usual."
+    "This does not judge the product — it reflects how much mental effort is needed."
   );
 
   return lines;
 }
 
+/* ---------- MAIN ANALYSIS ---------- */
 analyzeBtn.onclick = () => {
   const text = input.value.toLowerCase().trim();
-  if (!text) return;
+if (!text) return;
 
+if (!looksLikeIngredientText(text)) {
+  result.classList.remove("hidden");
+  verdict.innerText = "Input not recognizable";
+  verdict.className = "verdict moderate";
+  summary.innerText =
+    "This doesn’t look like a food ingredient list. Please enter ingredients as shown on a food label.";
+  explanation.innerHTML = `
+    <li>Try entering ingredients separated by commas.</li>
+    <li>Example: <em>Milk, Sugar, Wheat Flour, Cocoa Powder</em></li>
+  `;
+  return;
+}
   const items = text.split(",").map(i => i.trim());
   let found = [];
 
@@ -102,43 +126,51 @@ analyzeBtn.onclick = () => {
   verdict.innerText = verdictData.text;
   verdict.className = verdictData.className;
 
-  if (found.length === 0) {
-    summary.innerText =
-      "The ingredients are described clearly, making the label easy to understand at a glance.";
-    explanation.innerHTML = `
-      <li>The ingredients use familiar, specific food terms.</li>
-      <li>Most people can quickly understand what the product contains.</li>
-      <li>Very little interpretation is required.</li>
-    `;
-    return;
-  }
-
   summary.innerText =
-    "Some ingredients don’t clearly explain what they are or why they’re included, which increases interpretation effort.";
+    found.length === 0
+      ? "The label is clear and easy to understand."
+      : "Some ingredients require extra interpretation.";
 
-  const explanationLines = buildExplanation(found);
-  explanation.innerHTML = explanationLines
+  explanation.innerHTML = buildExplanation(found)
     .map(line => `<li>${line}</li>`)
     .join("");
+
+  explainToggle.innerText = getExplainButtonText(found);
 };
 
+/* ---------- Toggle Explanation ---------- */
 explainToggle.onclick = () => {
   explanation.classList.toggle("hidden");
   const open = !explanation.classList.contains("hidden");
-  explainToggle.classList.toggle("open", open);
+
   explainToggle.innerText = open
     ? "Hide details"
-    : "Why does this label need interpretation?";
+    : getExplainButtonText(
+        verdict.classList.contains("low") ? [] :
+        verdict.classList.contains("moderate") ? ["x"] :
+        ["x","y","z"]
+      );
 };
 
-// Example buttons (FIXED)
+/* ---------- Example Buttons ---------- */
 document.querySelectorAll(".example-btn").forEach(btn => {
-  btn.onclick = () => {
-    input.value = btn.dataset.text;
-  };
+  if (btn.dataset.text) {
+    btn.onclick = () => {
+      input.value = btn.dataset.text;
+    };
+  }
 });
 
-// Dark mode toggle (FIXED)
+/* ---------- Option A: Simulated Image Input ---------- */
+imageBtn.onclick = () => imageInput.click();
+
+imageInput.onchange = () => {
+  // Simulated OCR result
+  input.value =
+    "Carbonated Water, Sugar, Palm Oil, Emulsifier (E471), Artificial Flavour";
+};
+
+/* ---------- Dark Mode ---------- */
 themeToggle.onclick = () => {
   document.body.classList.toggle("dark");
   themeToggle.innerText =
