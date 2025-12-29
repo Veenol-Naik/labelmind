@@ -85,7 +85,7 @@ function buildExplanation(found) {
   }
 
   lines.push(
-    "This does not judge the product — it reflects how much mental effort is needed."
+    "This does not judge the product, it reflects how much mental effort is needed."
   );
 
   return lines;
