@@ -1,122 +1,84 @@
-# LabelMind
+# 🧠 LabelMind  
+**Explainable, AI-native food label understanding at the moment decisions matter**
 
-**LabelMind** is an interactive tool that helps users understand **how easy or difficult a food label is to interpret**.  
-It does **not** judge health, nutrition, or brand quality. Instead, it focuses on **label clarity and interpretability**.
-
-> _Not fear. Not guesswork. Just clarity._
+Live Prototype 👉 https://labelmind.onrender.com/
 
 ---
 
-## 🚩 Problem Statement
+## 🚀 What is LabelMind?
 
-Food ingredient labels often rely on:
-- Functional or processing-oriented terms (e.g., emulsifiers, stabilizers)
-- Generic descriptions (e.g., flavouring substances)
-- Additive codes that require prior knowledge
+**LabelMind** is an AI-native consumer experience that helps people understand *how easy or hard a food label is to interpret*  without fear, nutrition scoring, or ingredient dumping.
 
-This creates **cognitive friction** for consumers trying to make quick, informed decisions — especially when context matters (daily use, kids, diabetic, etc.).
+Instead of listing ingredients or acting like a database, LabelMind acts as an **intelligent co-pilot**:
+- It reasons on the user’s behalf
+- Explains why a label feels clear or ambiguous
+- Communicates uncertainty honestly
+- Reduces cognitive load at decision time
 
-Most tools either:
-- Dump raw ingredient databases, or
-- Add AI-generated health scores on top of existing systems
-
-**LabelMind takes a different approach.**
+This project is intentionally **experience-first**, aligned with the hackathon’s focus on AI-native interaction design.
 
 ---
 
-## 💡 Core Idea
+## 🎯 Why this is AI-Native (Not a Traditional App)
 
-LabelMind introduces a **new interaction paradigm**:
-> Instead of telling users *what to eat*, it shows them *how much interpretation a label requires*.
+Traditional tools:
+- Are menu-driven
+- Require filters and configuration
+- Dump data and expect interpretation
 
-The output is **explainable, calm, and contextual**, helping users build trust and understanding rather than fear.
+**LabelMind is different:**
+- Intent-first (no filters, no settings)
+- Interprets labels automatically
+- Explains reasoning in human language
+- Adapts explanations based on ambiguity, not rules
+- Acts as a thinking partner, not a lookup tool
 
----
-
-## ✨ Key Features
-
-- 🧾 Paste any ingredient list
-- 🎯 Choose consumer context (Daily / Kids / Diabetic / Occasional)
-- 🧠 Identifies interpretation-heavy ingredient patterns
-- 🗣️ Human-readable verdicts:
-  - *Clear and direct label*
-  - *Moderately interpretive label*
-  - *Heavily interpretive label*
-- 📖 Expandable explanations (no hidden logic)
-- 🎨 Clean UI with micro-animations
-- 🌙 Light / Dark mode toggle
-- 🚀 Example buttons for common product labels
+The interface is the intelligence.
 
 ---
 
-## 🧠 Explainability First
+## 🧩 How It Works (Conceptually)
 
-Every verdict is supported by:
-- Clear reasoning
-- Plain-language explanations
-- No black-box models
-- No hallucinated claims
+1. User pastes an ingredient list (or clicks an example)
+2. The system detects **signals of interpretive complexity**
+   - Functional ingredient descriptions
+   - Processing-oriented terms
+   - Ambiguous additives
+3. The AI synthesizes:
+   - A **human-readable verdict**
+   - A **clear explanation of why interpretation is needed**
+4. Uncertainty is communicated explicitly not hidden
 
-LabelMind does **not** rely on:
-- LLM-generated judgments
-- Nutrition scoring systems
-- Medical assumptions
-
----
-
-## 🚫 What LabelMind Is NOT
-
-- ❌ A health or nutrition scoring app  
-- ❌ An AI-powered database browser  
-- ❌ An OCR or scraping pipeline  
-- ❌ A regulatory compliance checker  
-
-It deliberately avoids making claims about health outcomes.
+No ingredient databases.  
+No health scoring.  
+No false certainty.
 
 ---
 
-## 🧪 Example Scenarios
+## 🌐 Live Demo
 
-- Compare how interpretable two snack labels are
-- Understand why a soft drink label feels confusing at first glance
-- See how interpretation difficulty changes with consumer context
-- Educate users on label transparency without overwhelming them
+👉 **Live Prototype:**  
+https://labelmind.onrender.com/
+
+(Hosted on Render, may take a few seconds to wake up)
 
 ---
 
-## 🛠️ Tech Stack
+## 🖥️ Tech Stack
 
 - **Frontend:** HTML, CSS, Vanilla JavaScript
 - **Backend:** Python (Flask)
-- **No external APIs**
-- **No LLM dependency**
+- **Deployment:** Render
+- **Design:** Custom UI, dark/light mode, micro-animations
+
+The system uses **simulated reasoning logic** to demonstrate AI-native behavior, as encouraged by the challenge scope.
 
 ---
 
-## 📂 Project Structure
-
-LabelMind/
-├── README.me
-├── main.py
-├── requirements.txt
-├── templates/
-│ └── index.html
-└── static/
-├── style.css
-└── script.js
-
-
 ## ▶️ How to Run Locally
 
-1. Clone the repository
-git clone <repository-url>
+clone the repository 
+```bash
 cd LabelMind
-
-2. Install dependencies
 pip install -r requirements.txt
-
-3. Run the application
 python main.py
-
-4. Open in your browser
-👉 http://127.0.0.1:5000
